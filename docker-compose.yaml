@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  scylla-node1:
+    image: scylladb/scylla:5.0.5
+    container_name: scylla-node1
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+      - "10000:10000"
+    networks:
+      - scylla-cluster
+    volumes:
+      - ./data/node1:/var/lib/scylla
+    command: --seeds=scylla-node1 --broadcast-address=scylla-node1 --broadcast-rpc-address=scylla-node1
+
+  scylla-node2:
+    image: scylladb/scylla:5.0.5
+    container_name: scylla-node2
+    networks:
+      - scylla-cluster
+    volumes:
+      - ./data/node2:/var/lib/scylla
+    command: --seeds=scylla-node1 --broadcast-address=scylla-node2 --broadcast-rpc-address=scylla-node2
+    depends_on:
+      - scylla-node1
+
+  scylla-node3:
+    image: scylladb/scylla:5.0.5
+    container_name: scylla-node3
+    networks:
+      - scylla-cluster
+    volumes:
+      - ./data/node3:/var/lib/scylla
+    command: --seeds=scylla-node1 --broadcast-address=scylla-node3 --broadcast-rpc-address=scylla-node3
+    depends_on:
+      - scylla-node1
+
+networks:
+  scylla-cluster:
+    driver: bridge
