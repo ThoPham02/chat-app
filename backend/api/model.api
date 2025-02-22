@@ -1,0 +1,46 @@
+info (
+	title:   "room rover models"
+	author:  "thopb"
+	email:   "thoahlgbg2002@gmail.com"
+	version: "1.0"
+)
+
+// common model api
+type (
+	Result {
+		Code    int    `json:"code"`    //    Result code: 0 is success. Otherwise, getting an error
+		Message string `json:"message"` // Result message: detail response code
+	}
+)
+
+// account model api
+type (
+	User {
+		UserID      int64  `json:"userID"`
+		Status      int64  `json:"status"`
+		FullName    string `json:"fullName"`
+		AvatarUrl   string `json:"avatarUrl"`
+		CreatedAt   int64  `json:"createdAt"`
+		UpdatedAt   int64  `json:"updatedAt"`
+	}
+)
+
+// chat model api
+type (
+    Conversation {
+        ConversationID int64  `json:"conversationID"`
+        Conversation   string `json:"conversation"`
+        AvatarUrl      string `json:"avatarUrl"`
+        LastMessage    string `json:"lastMessage"`
+        LastTime       int64  `json:"lastTime"`
+        UnreadCount    int64  `json:"unreadCount"`
+    }
+
+    Message {
+        MessageID      int64  `json:"messageID"`
+        ConversationID int64  `json:"conversationID"`
+        SenderID       int64  `json:"senderID"`
+        Message        string `json:"message"`
+        CreatedAt      int64  `json:"createdAt"`
+    }
+)

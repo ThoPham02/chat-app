@@ -36,6 +36,17 @@ services:
     depends_on:
       - scylla-node1
 
+  # mysql-cluster:
+  #   image: mysql:latest
+  #   container_name: mysql-cluster
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: test
+  #   volumes:
+  #     - ./data/mysql:/var/lib/mysql
+
 networks:
   scylla-cluster:
     driver: bridge

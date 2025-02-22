@@ -1,0 +1,98 @@
+info (
+	title:   "chat apps chat models"
+	author:  "thopb"
+	email:   "thoahlgbg2002@gmail.com"
+	version: "1.0"
+)
+
+import "model.api"
+
+type (
+	CreateConversationReq {
+		Conversation string `json:"conversation"`
+		AvatarUrl    string `json:"avatarUrl"`
+	}
+	CreateConversationRes {
+		Result       Result       `json:"result"`
+		Conversation Conversation `json:"conversation"`
+	}
+
+	GetListConversationReq {
+		Limit  int64 `json:"limit"`
+		Offset int64 `json:"offset"`
+	}
+	GetListConversationRes {
+		Result        Result         `json:"result"`
+		Conversations []Conversation `json:"conversations"`
+		Total         int64          `json:"total"`
+	}
+
+	GetListMessageReq {
+		ConversationID int64 `path:"conversationID"`
+		Limit          int64 `json:"limit"`
+		Offset         int64 `json:"offset"`
+	}
+	GetListMessageRes {
+		Result   Result    `json:"result"`
+		Messages []Message `json:"messages"`
+		Total    int64     `json:"total"`
+	}
+
+	SendMessageReq {
+		ConversationID int64  `path:"conversationID"`
+		Message        string `json:"message"`
+	}
+	SendMessageRes {
+		Result  Result  `json:"result"`
+		Message Message `json:"message"`
+	}
+
+	GetFindMessageReq {
+		ConversationID int64  `path:"conversationID"`
+		Limit          int64  `json:"limit"`
+		Offset         int64  `json:"offset"`
+		Keyword        string `json:"keyword"`
+	}
+	GetFindMessageRes {
+		Result   Result    `json:"result"`
+		Messages []Message `json:"messages"`
+		Total    int64     `json:"total"`
+	}
+)
+
+@server (
+	jwt:        Auth
+	middleware: UserTokenMiddleware
+	prefix: /chats
+)
+service chat-api {
+	@doc (
+		summary: "Create a new conversations"
+	)
+	@handler CreateConversation
+	post /conversations (CreateConversationReq) returns (CreateConversationRes)
+	
+	@doc (
+		summary: "Get list conversations"
+	)
+	@handler GetListConversation
+	get /conversations (GetListConversationReq) returns (GetListConversationRes)
+	
+	@doc (
+		summary: "Get list messages"
+	)
+	@handler GetListMessage
+	get /:conversationID/messages (GetListMessageReq) returns (GetListMessageRes)
+	
+	@doc (
+		summary: "Send message"
+	)
+	@handler SendMessage
+	post /:conversationID/messages (SendMessageReq) returns (SendMessageRes)
+	
+	@doc (
+		summary: "Find messages"
+	)
+	@handler FindMessage
+	get /:conversationID/messages-find (GetFindMessageReq) returns (GetFindMessageRes)
+}
