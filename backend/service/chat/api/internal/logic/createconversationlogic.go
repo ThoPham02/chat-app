@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"chat_app/common"
 	"chat_app/service/chat/api/internal/svc"
 	"chat_app/service/chat/api/internal/types"
 
@@ -24,7 +25,16 @@ func NewCreateConversationLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *CreateConversationLogic) CreateConversation(req *types.CreateConversationReq) (resp *types.CreateConversationRes, err error) {
-	// todo: add your logic here and delete this line
+	l.Logger.Info("CreateConversation req: ", req)
 
-	return
+	var conversation types.Conversation
+
+	l.Logger.Info("CreateConversation Success")
+	return &types.CreateConversationRes{
+		Result: types.Result{
+			Code:    common.SUCCESS_CODE,
+			Message: common.SUCCESS_MESS,
+		},
+		Conversation: conversation,
+	}, nil
 }

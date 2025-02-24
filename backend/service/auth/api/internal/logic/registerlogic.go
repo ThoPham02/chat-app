@@ -41,7 +41,7 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 	var userModel *model.Users
 
 	userModel, err = l.svcCtx.UserModel.FindOneByUsername(l.ctx, req.UserName)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows{
 		l.Logger.Error(err)
 		return &types.RegisterRes{
 			Result: types.Result{

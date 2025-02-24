@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"chat_app/common"
@@ -37,7 +38,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 	var userModel *model.Users
 
 	userModel, err = l.svcCtx.UserModel.FindOneByUsername(l.ctx, req.UserName)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		l.Logger.Error(err)
 		return &types.LoginRes{
 			Result: types.Result{
@@ -55,7 +56,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginRes, err error
 		}, nil
 	}
 
-	if util.VerifyPassword(req.Password, userModel.HashPw) {
+	if !util.VerifyPassword(req.Password, userModel.HashPw) {
 		return &types.LoginRes{
 			Result: types.Result{
 				Code:    common.PASSWORD_INCORRECT_CODE,

@@ -9,8 +9,7 @@ import "model.api"
 
 type (
 	CreateConversationReq {
-		Conversation string `json:"conversation"`
-		AvatarUrl    string `json:"avatarUrl"`
+		UserID int64 `json:"userID"`
 	}
 	CreateConversationRes {
 		Result       Result       `json:"result"`

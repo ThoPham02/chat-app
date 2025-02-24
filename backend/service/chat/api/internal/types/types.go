@@ -13,8 +13,7 @@ type Conversation struct {
 }
 
 type CreateConversationReq struct {
-	Conversation string `json:"conversation"`
-	AvatarUrl    string `json:"avatarUrl"`
+	UserID int64 `json:"userID"`
 }
 
 type CreateConversationRes struct {
