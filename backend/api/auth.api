@@ -9,26 +9,26 @@ import "model.api"
 
 type (
 	LoginReq {
-		Phone    string `form:"phone"`    // user_name
-		Password string `form:"password"` //  password
+		UserName string `json:"userName"` // user_name
+		Password string `json:"password"` //  password
 	}
 	LoginRes {
 		Result Result `json:"result"`
 		Token  string `json:"token"` // jwt token for api
-		User   User   `json:"user"`  // Account info
+		User   User   `json:"user"` // Account info
 	}
 )
 
 type (
 	RegisterReq {
-		Phone    string `form:"phone"`
-		Password string `form:"password"`
-		UserRole int64  `form:"user_role"`
+		UserName string `json:"userName"` // user_name
+		Password string `json:"password"`
+		Fullname string `json:"fullname"`
 	}
 	RegisterRes {
 		Result Result `json:"result"`
 		Token  string `json:"token"` // jwt token for api
-		User   User   `json:"user"`  // Account info
+		User   User   `json:"user"` // Account info
 	}
 )
 
@@ -41,10 +41,11 @@ service auth-api {
 	)
 	@handler Login
 	post /login (LoginReq) returns (LoginRes)
-	
+
 	@doc (
 		summary: "Register New User"
 	)
 	@handler Register
 	post /register (RegisterReq) returns (RegisterRes)
 }
+

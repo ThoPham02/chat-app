@@ -17,11 +17,9 @@ type (
 type (
 	User {
 		UserID      int64  `json:"userID"`
-		Status      int64  `json:"status"`
 		FullName    string `json:"fullName"`
 		AvatarUrl   string `json:"avatarUrl"`
 		CreatedAt   int64  `json:"createdAt"`
-		UpdatedAt   int64  `json:"updatedAt"`
 	}
 )
 
